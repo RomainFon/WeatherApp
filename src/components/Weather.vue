@@ -42,10 +42,5 @@ export default {
       return this.weather.main.humidity + ' %'
     }
   },
-
-  mounted() {
-    console.log(this.weather)
-  }
-
 }
 </script>
