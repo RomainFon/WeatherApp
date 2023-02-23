@@ -7,9 +7,17 @@
         <span>°C</span>
       </div>
       <p class="font-semibold py-2 capitalize ">{{ weather.weather[0].description }}</p>
+      <div class="flex justify-around align-middle mt-4">
+        <SecondaryInformation icon="wind" title="Vent" :value="windSpeed"  />
+        <SecondaryInformation icon="humidity" title="Humidité" :value="humidity" />
+      </div>
     </div>
   </main>
 </template>
+
+<script setup>
+import SecondaryInformation from './SecondaryInformation.vue'
+</script>
 
 <script>
 export default {
@@ -26,6 +34,12 @@ export default {
     weatherIcon() {
       const path = `../assets/weather-icons/${this.weather.weather[0].icon}.svg`
       return new URL(path, import.meta.url)
+    },
+    windSpeed() {
+      return Math.round(this.weather.wind.speed).toString() + ' Km/h'
+    },
+    humidity() {
+      return this.weather.main.humidity + ' %'
     }
   },
 

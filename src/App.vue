@@ -1,6 +1,7 @@
 <script setup>
 import Form from './components/Form.vue'
-import Weather from './components/Weather.vue'</script>
+import Weather from './components/Weather.vue'
+</script>
 
 <template>
   <main class="w-screen h-screen bg-sky-900 flex">
