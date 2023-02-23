@@ -1,14 +1,17 @@
 <script setup>
 import Form from './components/Form.vue'
 import Weather from './components/Weather.vue'
+import Error from './components/Error.vue'
 </script>
 
 <template>
   <main class="w-screen h-screen bg-sky-900 flex">
-    <div class="bg-white m-auto p-6 rounded-xl shadow-2xl">
-      <Form @handleLocalization="loadWeather" :city="city"/>
-      <Weather v-if="weather" :weather="weather" />
+      <div class="bg-white p-6 rounded-xl shadow-2xl m-auto">
+        <Form @handleLocalization="loadWeather" :city="city"/>
+        <Weather v-if="weather" :weather="weather" />
+        <Error v-if="error" :value="error" />
     </div>
+
   </main>
 </template>
 
@@ -18,7 +21,8 @@ export default {
     return {
       localization: null,
       weather: null,
-      apiKey: 'eedd73ec95de817818ed96985952612d'
+      apiKey: 'eedd73ec95de817818ed96985952612d',
+      error: null,
     }
   },
   mounted() {
@@ -28,7 +32,7 @@ export default {
     loadWeather(city) {
       this.getGeographicalCoordinates(city)
           .then((localization) => this.getWeather(localization.lat, localization.lon))
-          .catch((err) => console.log(err)) // TODO: Gérer erreur
+          .catch((err) => this.error = err)
     },
     getWeather(lat, lon) {
       const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}&lang=fr`
@@ -43,8 +47,13 @@ export default {
         const url = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${this.apiKey}`
         fetch(url)
             .then((response) => response.json())
-            .then((data) => resolve(data[0]))
-            .catch((err) => reject(err))
+            .then((data) => {
+              if (data.length) {
+                resolve(data[0])
+              }
+              reject('La ville recherchée est introuvable')
+            })
+            .catch(() => reject('Une erreur est survenue'))
       })
     },
     getUserLocation() {
@@ -59,6 +68,14 @@ export default {
   computed: {
     city() {
       return this.weather ? this.weather.name : null
+    }
+  },
+
+  watch: {
+    error() {
+      setTimeout(() => {
+        this.error = null
+      }, 3000)
     }
   }
 }
