@@ -1,12 +1,11 @@
 <script setup>
 import Form from './components/Form.vue'
-import Weather from './components/Weather.vue'
-</script>
+import Weather from './components/Weather.vue'</script>
 
 <template>
   <main class="w-screen h-screen bg-sky-900 flex">
     <div class="bg-white m-auto p-6 rounded-xl shadow-2xl">
-      <Form @handleLocalization="updateLocalization"/>
+      <Form @handleLocalization="loadWeather"/>
       <Weather v-if="weather" :weather="weather" />
     </div>
   </main>
@@ -18,19 +17,31 @@ export default {
     return {
       localization: null,
       weather: null,
+      apiKey: 'eedd73ec95de817818ed96985952612d'
     }
   },
   methods: {
-    updateLocalization(value) {
-      this.localization = value
-      this.getWeather()
+    loadWeather(city) {
+      this.getGeographicalCoordinates(city)
+          .then((localization) => this.getWeather(localization))
+          .catch((err) => console.log(err)) // TODO: Gérer erreur
     },
-    getWeather() {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.localization}&appid=eedd73ec95de817818ed96985952612d&lang=fr`
+    getWeather(localization) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${localization.lat}&lon=${localization.lon}&appid=${this.apiKey}&lang=fr`
       fetch(url)
           .then((response) => response.json())
           .then((data) => this.weather = data);
+    },
+    getGeographicalCoordinates(city) {
+      return new Promise((resolve, reject) => {
+        const url = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${this.apiKey}`
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => resolve(data[0]))
+            .catch((err) => reject(err));
+      })
     }
+
   },
 }
 </script>
