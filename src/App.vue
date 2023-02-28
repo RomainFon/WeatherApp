@@ -2,17 +2,19 @@
 import Form from './components/Form.vue'
 import Weather from './components/Weather.vue'
 import Error from './components/Error.vue'
+import Links from "./components/Links.vue";
 </script>
 
 <template>
   <main class="w-screen h-screen bg-sky-900 flex flex-col">
       <div class="m-auto">
-        <img alt="Vue logo" class="mx-auto mb-4 w-4/5 max-w-xs" src="./assets/logo.png"/>
+        <img alt="App Weather logo" class="mx-auto mb-4 w-4/5 max-w-xs" src="./assets/logo.png"/>
         <div class="bg-white p-6 rounded-xl shadow-2xl m-auto">
           <Form @handleLocalization="loadWeather" :city="city"/>
           <Weather v-if="weather" :weather="weather"/>
           <Error v-if="error" :value="error"/>
         </div>
+        <Links />
       </div>
   </main>
 </template>
