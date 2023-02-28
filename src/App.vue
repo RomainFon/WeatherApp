@@ -5,13 +5,15 @@ import Error from './components/Error.vue'
 </script>
 
 <template>
-  <main class="w-screen h-screen bg-sky-900 flex">
-      <div class="bg-white p-6 rounded-xl shadow-2xl m-auto">
-        <Form @handleLocalization="loadWeather" :city="city"/>
-        <Weather v-if="weather" :weather="weather" />
-        <Error v-if="error" :value="error" />
-    </div>
-
+  <main class="w-screen h-screen bg-sky-900 flex flex-col">
+      <div class="m-auto">
+        <img alt="Vue logo" class="mx-auto mb-4 w-4/5 max-w-xs" src="./assets/logo.png"/>
+        <div class="bg-white p-6 rounded-xl shadow-2xl m-auto">
+          <Form @handleLocalization="loadWeather" :city="city"/>
+          <Weather v-if="weather" :weather="weather"/>
+          <Error v-if="error" :value="error"/>
+        </div>
+      </div>
   </main>
 </template>
 
