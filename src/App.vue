@@ -36,7 +36,10 @@ export default {
     loadWeather(city) {
       this.getGeographicalCoordinates(city)
           .then((localization) => this.getWeather(localization.lat, localization.lon))
-          .catch((err) => this.error = err)
+          .catch((err) => {
+            this.error = err
+            this.weather = null
+          })
     },
     getWeather(lat, lon) {
       const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${this.apiKey}&lang=fr`
