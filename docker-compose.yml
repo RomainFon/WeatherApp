@@ -4,6 +4,18 @@ services:
     build:
       context: .
     ports:
-      - '8080:8080'
-    expose:
-      - '8080'
+      - '5173:8080'
+    networks:
+      - traefik_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_network"
+      - "traefik.http.routers.api_http.rule=Host(`weather-app.fontaine-romain.fr`)"
+      - "traefik.http.routers.api_https.rule=Host(`weather-app.fontaine-romain.fr`)"
+      - "traefik.http.routers.api_https.tls=true"
+      - "traefik.http.routers.api_https.tls.certResolver=http"
+      - "traefik.http.routers.api_http.middlewares=https_redirect@file"
+
+networks:
+  traefik_network:
+    external: true
