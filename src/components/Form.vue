@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     submitLocalization(event) {
+      navigator.virtualKeyboard.hide();
       this.$emit('handleLocalization', this.localization)
       event.preventDefault()
     }
