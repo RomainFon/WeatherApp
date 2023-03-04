@@ -22,6 +22,7 @@ Two ways to start the project:
 ### With Docker & Docker Compose
 
 ```sh
+docker-compose build
 docker-compose up -d
 ```
 
