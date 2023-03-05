@@ -1,5 +1,5 @@
 <template>
-  <img alt="Weather Icon" class="m-auto w-64" :src="getWeatherIcon"/>
+  <img alt="Weather Icon" class="m-auto" :class="width" :src="getWeatherIcon"/>
 </template>
 
 <script>
@@ -27,6 +27,10 @@ export default {
     name: {
       type: String,
       default: null
+    },
+    width: {
+      type: String,
+      default: 'w-64'
     }
   },
   computed: {

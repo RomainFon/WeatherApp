@@ -3,6 +3,7 @@ import Form from './components/Form.vue'
 import Weather from './components/Weather.vue'
 import Error from './components/Error.vue'
 import Links from "./components/Links.vue";
+import WeatherNextHours from './components/WeatherNextHours.vue';
 </script>
 
 <template>
@@ -11,8 +12,9 @@ import Links from "./components/Links.vue";
         <img alt="App Weather logo" class="mx-auto mb-4 w-4/5 max-w-xs" src="./assets/logo.png"/>
         <div class="bg-white bg-opacity-80 p-6 rounded-xl shadow-2xl m-auto">
           <Form @handleLocalization="loadWeather" :city="city"/>
-          <Weather v-if="weather" :weather="weather"/>
           <Error v-if="error" :value="error"/>
+          <Weather v-if="weather" :weather="weather"/>
+          <WeatherNextHours v-if="weathersNextHours" :weathers="weathersNextHours"/>
         </div>
         <Links />
       </div>
@@ -25,6 +27,7 @@ export default {
     return {
       localization: null,
       weather: null,
+      weathersNextHours: null,
       apiKey: 'eedd73ec95de817818ed96985952612d',
       error: null,
     }
@@ -35,7 +38,10 @@ export default {
   methods: {
     loadWeather(city) {
       this.getGeographicalCoordinates(city)
-          .then((localization) => this.getWeather(localization.lat, localization.lon))
+          .then((localization) => {
+            this.getWeather(localization.lat, localization.lon)
+            this.getWeathersNextHours(localization.lat, localization.lon)
+          })
           .catch((err) => {
             this.error = err
             this.weather = null
@@ -47,6 +53,14 @@ export default {
           .then((response) => response.json())
           .then((data) => {
             this.weather = data
+          })
+    },
+    getWeathersNextHours(lat, lon) {
+      const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${this.apiKey}&lang=fr`
+      fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            this.weathersNextHours = data.list
           })
     },
     getGeographicalCoordinates(city) {
@@ -67,6 +81,7 @@ export default {
       navigator.geolocation.getCurrentPosition((location) => {
         if (location) {
           this.getWeather(location.coords.latitude, location.coords.longitude)
+          this.getWeathersNextHours(location.coords.latitude, location.coords.longitude)
         }
       })
     }
