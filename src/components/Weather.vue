@@ -1,6 +1,6 @@
 <template>
   <main class="text-center text-sky-900">
-    <WeatherIcon :name="weather.weather[0].icon" />
+    <WeatherIcon :name="weather.weather[0].icon" class="-mt-12" />
     <div class="-mt-12">
       <div class="flex justify-center font-bold">
         <p class="text-6xl">{{ temperatureInDegrees }}</p>
