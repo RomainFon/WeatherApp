@@ -4,17 +4,22 @@ import Weather from './components/Weather.vue'
 import Error from './components/Error.vue'
 import Links from "./components/Links.vue";
 import WeatherNextHours from './components/WeatherNextHours.vue';
+import WeatherForecasts from './components/WeatherForecasts.vue';
 </script>
 
 <template>
   <main class="w-screen min-h-screen flex flex-col bg-[url('/src/assets/wallpaper.jpg')] bg-cover bg-center">
       <div class="m-auto" style="max-width: 90vw;">
         <img alt="App Weather logo" class="mx-auto mb-4 w-4/5 max-w-xs" src="./assets/logo.png"/>
-        <div class="bg-white bg-opacity-80 p-6 rounded-xl shadow-2xl m-auto">
-          <Form @handleLocalization="loadWeather" :city="city"/>
-          <Error v-if="error" :value="error"/>
-          <Weather v-if="weather" :weather="weather"/>
-          <WeatherNextHours v-if="weathersNextHours" :weathers="weathersNextHours"/>
+        <div class="bg-white bg-opacity-80 p-6 rounded-xl shadow-2xl m-auto w-full sm:w-[32rem]">
+          <div v-if="!displayWeatherForecasts">
+            <Form @handleLocalization="loadWeather" :city="city"/>
+            <Error v-if="error" :value="error"/>
+            <Weather v-if="weather" :weather="weather"/>
+            <WeatherNextHours v-if="weatherForecasts" :weathers="weatherForecasts"/>
+            <button class="w-full mt-4 bg-sky-900 p-3 rounded-xl text-white font-semibold hover:opacity-90" @click="displayWeatherForecasts = true">Les prochains jours</button>
+          </div>
+          <WeatherForecasts v-if="displayWeatherForecasts && weatherForecasts" @handleWeatherForecasts="displayWeatherForecasts = false" :weathers="weatherForecasts"/>
         </div>
         <Links />
       </div>
@@ -27,9 +32,10 @@ export default {
     return {
       localization: null,
       weather: null,
-      weathersNextHours: null,
+      weatherForecasts: null,
       apiKey: 'eedd73ec95de817818ed96985952612d',
       error: null,
+      displayWeatherForecasts: false
     }
   },
   mounted() {
@@ -60,7 +66,7 @@ export default {
       fetch(url)
           .then((response) => response.json())
           .then((data) => {
-            this.weathersNextHours = data.list
+            this.weatherForecasts = data.list
           })
     },
     getGeographicalCoordinates(city) {
@@ -85,7 +91,6 @@ export default {
         }
       })
     }
-
   },
   computed: {
     city() {
