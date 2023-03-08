@@ -7,7 +7,7 @@ import WeatherNextHours from './components/WeatherNextHours.vue';
 </script>
 
 <template>
-  <main class="w-screen h-screen flex flex-col bg-[url('/src/assets/wallpaper.jpg')] bg-cover bg-center">
+  <main class="w-screen min-h-screen flex flex-col bg-[url('/src/assets/wallpaper.jpg')] bg-cover bg-center">
       <div class="m-auto" style="max-width: 90vw;">
         <img alt="App Weather logo" class="mx-auto mb-4 w-4/5 max-w-xs" src="./assets/logo.png"/>
         <div class="bg-white bg-opacity-80 p-6 rounded-xl shadow-2xl m-auto">
