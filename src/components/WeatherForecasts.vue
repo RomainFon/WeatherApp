@@ -5,7 +5,7 @@ import WeatherForecastsDetail from './WeatherForecastsDetail.vue';
 
 <template>
   <div>
-    <div class="flex">
+    <div class="flex mb-4">
       <Previous class="w-6 cursor-pointer" @click="previousClick"/>
       <h2 class="ml-4 text-md text-sky-900 font-semibold">Les prochains jours</h2>
     </div>

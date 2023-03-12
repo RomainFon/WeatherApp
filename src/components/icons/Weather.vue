@@ -1,5 +1,5 @@
 <template>
-  <img alt="Weather Icon" class="m-auto" :class="width" :src="getWeatherIcon"/>
+  <img alt="Weather Icon" :class="width" :src="getWeatherIcon"/>
 </template>
 
 <script>

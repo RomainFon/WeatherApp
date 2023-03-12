@@ -12,10 +12,7 @@
 </template>
 
 <script setup>
-import SecondaryInformation from './SecondaryInformation.vue'
 import WeatherIcon from './icons/Weather.vue'
-import HumidityIcon from '../assets/app-icons/humidity.svg'
-import WindIcon from '../assets/app-icons/wind.svg'
 </script>
 
 <script>
