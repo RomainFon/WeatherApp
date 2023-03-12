@@ -17,7 +17,7 @@ import WeatherForecasts from './components/WeatherForecasts.vue';
             <Error v-if="error" :value="error"/>
             <Weather v-if="weather" :weather="weather"/>
             <WeatherNextHours v-if="weatherForecasts" :weathers="weatherForecasts"/>
-            <button class="w-full mt-4 bg-sky-900 p-3 rounded-xl text-white font-semibold hover:opacity-90" @click="displayWeatherForecasts = true">Les prochains jours</button>
+            <button v-if="weatherForecasts" class="w-full mt-4 bg-sky-900 p-3 rounded-xl text-white font-semibold hover:opacity-90" @click="displayWeatherForecasts = true">Les prochains jours</button>
           </div>
           <WeatherForecasts v-if="displayWeatherForecasts && weatherForecasts" @handleWeatherForecasts="displayWeatherForecasts = false" :weathers="weatherForecasts"/>
         </div>
