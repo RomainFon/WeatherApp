@@ -3,18 +3,15 @@ services:
   weather-app:
     build:
       context: .
-    ports:
-      - '5173:8080'
     networks:
       - traefik_network
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik_network"
-      - "traefik.http.routers.weather-app_http.rule=Host(`weather-app.fontaine-romain.fr`)"
-      - "traefik.http.routers.weather-app_https.rule=Host(`weather-app.fontaine-romain.fr`)"
-      - "traefik.http.routers.weather-app_https.tls=true"
-      - "traefik.http.routers.weather-app_https.tls.certResolver=http"
-      - "traefik.http.routers.weather-app_http.middlewares=https_redirect@file"
+      - "traefik.http.routers.portainer.entrypoints=websecure"
+      - "traefik.http.routers.portainer.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"
 
 networks:
   traefik_network:

@@ -22,8 +22,7 @@ Two ways to start the project:
 ### With Docker & Docker Compose
 
 ```sh
-docker-compose build
-docker-compose up -d
+docker compose up -d
 ```
 
 ### With Node & npm
@@ -31,4 +30,9 @@ docker-compose up -d
 ```sh
 npm install
 npm run dev
+```
+
+### Run in production
+```sh
+docker compose -f docker-compose.production.yml up -d
 ```
