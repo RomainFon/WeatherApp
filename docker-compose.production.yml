@@ -8,10 +8,10 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik_network"
-      - "traefik.http.routers.portainer.entrypoints=websecure"
-      - "traefik.http.routers.portainer.rule=Host(`${DOMAIN_NAME}`)"
-      - "traefik.http.routers.portainer.tls=true"
-      - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.weather-app.entrypoints=websecure"
+      - "traefik.http.routers.weather-app.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.weather-app.tls=true"
+      - "traefik.http.routers.weather-app.tls.certresolver=letsencrypt"
 
 networks:
   traefik_network:
